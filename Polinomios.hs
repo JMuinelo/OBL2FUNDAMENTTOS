@@ -12,7 +12,26 @@ type Polinomio = [Monomio]
 
 --1)
 agregarMon :: Monomio -> Polinomio -> Polinomio
-agregarMon = undefined    
+agregarMon = \m p -> case m of{
+    (c,g)->case p of{
+        []->case c of{
+            0->[];
+            k->[m];
+        }
+        (c2,g2):ps-> case g2<g of{
+            True -> m:p; 
+            False -> case g2==g of {
+                True -> case c+c2 of{
+                    0-> ps;
+                    k->(c+c2,g):ps;
+                }
+                False->(c2,g2) : agregarMon m ps;
+            }
+        }
+    }
+}
+
+
 
 --2)
 redPol :: Polinomio -> Polinomio
