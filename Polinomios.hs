@@ -73,11 +73,17 @@ derPol = \ p1 -> case p1 of{
 
 --6)
 evalPol :: Polinomio -> Int -> Int
-evalPol = undefined
+evalPol = \ p n -> case p of{
+    []-> 0;
+    (c,g):xs->c*(n^g) + evalPol xs n;
+}
 
 --7)
 gradoPol::Polinomio -> Int
-gradoPol = undefined
+gradoPol = \ p -> case p of{
+    [] -> 0;
+    (c,g):xs -> g; 
+}
 																	
 																	
 -- ======================
@@ -86,8 +92,37 @@ gradoPol = undefined
 
 --8)
 showMon :: Monomio -> String
-showMon = undefined
+showMon = \ m -> case m of{
+    (c,g) -> case c of{
+        0-> "";
+        -1 -> case g of{
+            0->show c;
+            1-> "-x";
+            h-> "-x^" ++show h;
+        };
+        1-> case g of{
+            0->show c;
+            1-> "x";
+            h-> "x^" ++show h;
+        };
+        k->case g of{
+            0->show k;
+            1-> show k ++ "x";
+            h-> show k ++ "x^" ++show h;
+        }
+    }
+}
 
 --9)
 showPol :: Polinomio -> String
-showPol = undefined  
+showPol =  \ p -> case p of{
+    []-> "";
+    x:xs -> case xs of{
+        []-> showMon x;
+        (c,g):ys-> case c of{
+            0 -> showMon x;
+            (c<0) -> showMon x ++ showMon (c,g) ++ showPol ys;
+            h -> showMon x ++ "+" ++ showMon (c,g) ++ showPol ys;
+        }
+    }
+}
