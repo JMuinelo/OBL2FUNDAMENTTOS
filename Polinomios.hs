@@ -114,15 +114,24 @@ showMon = \ m -> case m of{
 }
 
 --9)
+--Anda mal
 showPol :: Polinomio -> String
 showPol =  \ p -> case p of{
     []-> "";
     x:xs -> case xs of{
         []-> showMon x;
         (c,g):ys-> case c of{
-            0 -> showMon x;
-            (c<0) -> showMon x ++ showMon (c,g) ++ showPol ys;
-            h -> showMon x ++ "+" ++ showMon (c,g) ++ showPol ys;
+            0 -> showMon x ++ showPol ys;
+            h -> case h < 0 of {
+                True -> showMon x ++ showPol xs;
+                False -> showMon x ++ "+"  ++ showPol xs;
+            }
         }
     }
 }
+
+
+
+
+
+
