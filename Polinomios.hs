@@ -114,7 +114,6 @@ showMon = \ m -> case m of{
 }
 
 --9)
---Anda mal
 showPol :: Polinomio -> String
 showPol =  \ p -> case p of{
     []-> "";
